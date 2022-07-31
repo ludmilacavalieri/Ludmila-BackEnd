@@ -8,6 +8,7 @@ import com.backPortfolio.Ludmila.models.Usuario;
 import com.backPortfolio.Ludmila.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ public class UsuarioController {
         Usuario usuario=usuarioService.buscarUsuarioPorId(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
+    @PostAuthorize("hasRole('ADMIN')")
     @PutMapping("/update")
     public ResponseEntity<Usuario> editarUsuario(@RequestBody Usuario usuario) {
         Usuario updateUsuario=usuarioService.editarUsuario(usuario);
